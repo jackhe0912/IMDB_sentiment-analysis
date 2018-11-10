@@ -1,1 +1,3 @@
 # IMDB_sentiment-analysis
+本次上传的代码包括两部分，第一部分imdb_word2vec_Average.py是用word2vec建立词向量矩阵，再对每个评论的特征进行平均，得到特征 
+输入，用随机森林算法进行分类。第二部分是word2vec_tensorflow是基于tensorflow训练的词向量矩阵，后续采用深度学习算法LSTM对文本进行分类。
