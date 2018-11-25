@@ -143,10 +143,10 @@ class SkipGram:
             # tf.nn.embedding_lookup函数的用法主要是选取一个张量里面索引对应的元素。用于查找对应的wordembedding，将输入序列向量化
             embed=tf.nn.embedding_lookup(embedding,train_inputs)
 
-            softmax_weights=tf.Variable(tf.truncated_normal([vocabulary_size,embedding_size],stddev=1.0 /math.sqrt(embedding_size)))
-            softmax_bias=tf.Variable(tf.zeros([vocabulary_size]))
+            nce_weights=tf.Variable(tf.truncated_normal([vocabulary_size,embedding_size],stddev=1.0 /math.sqrt(embedding_size)))
+            nce_bias=tf.Variable(tf.zeros([vocabulary_size]))
 
-            loss=tf.reduce_mean(tf.nn.sampled_softmax_loss(softmax_weights,softmax_bias,train_labels,embed,n_sampled,vocabulary_size)) #负采样损失
+            loss=tf.reduce_mean(tf.nn.nce_loss(nce_weights,nce_bias,train_labels,embed,n_sampled,vocabulary_size)) #负采样损失
 
             optimizer = tf.train.AdagradOptimizer(1.0).minimize(loss)
             norm = tf.sqrt(tf.reduce_sum(tf.square(embedding), 1, keep_dims=True))  #计算每个词向量的模，并进行单位归一化，保留词向量维度
